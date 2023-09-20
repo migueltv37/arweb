@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>&lt;model-viewer&gt; template</title>
+    <meta charset="utf-8">
+    <meta name="description" content="&lt;model-viewer&gt; template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link type="text/css" href="https://filesarreality.com/11/styles.css" rel="stylesheet"/>
+  </head>
+  <body>
+      
+       <style>
+   /* Estilo para el contenedor del banner */
+        .banner-container {
+            position: fixed;
+            bottom: 20px; /* Puedes ajustar la distancia desde el borde inferior aquí */
+            left: 0;
+            right: 0;
+              height: 80px; 
+            /*background-color: #3498db;  Quitar el color de fondo */
+            background-image: url('https://filesarreality.com/2/1.png'); /* Cambia 'url_de_la_imagen.jpg' por la URL de tu imagen */
+            background-size: 100% 100%; /* Ajusta la imagen de fondo para ocupar todo el contenedor */
+            padding: 20px;
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 10px; /* Agregamos bordes redondeados */
+            margin: 0 auto; /* Centra el contenedor en la pantalla y agrega margen automático a los lados */
+            max-width: 80%; /* Limita el ancho máximo del banner al 80% del ancho de la pantalla */
+        }
+
+        /* Estilo para el contenedor del texto */
+        .text-container {
+            text-align: left;
+            color: white; /* Cambia el color del texto según tus preferencias */
+            font-size: 24px; /* Cambia el tamaño de fuente según tus preferencias */
+        }
+
+        /* Estilo para el texto adicional */
+        .additional-text {
+            text-align: left;
+            color: white; /* Cambia el color del texto adicional según tus preferencias */
+            font-size: 18px; /* Cambia el tamaño de fuente del texto adicional según tus preferencias */
+            margin-top: 10px; /* Agregamos margen superior para separar del texto principal */
+        }
+
+        /* Estilo para el botón en sí */
+        .button {
+            background-color: #e74c3c; /* Cambia el color del botón según tus preferencias */
+            color: white; /* Cambia el color del texto del botón según tus preferencias */
+            padding: 5px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px; /* Cambia el tamaño de fuente del botón según tus preferencias */
+            cursor: pointer;
+        }
+    </style>
+ 
+    <!-- <model-viewer> HTML element -->
+    <model-viewer src="https://filesarreality.com/files/dona.glb"
+                  poster="../../assets/ShopifyModels/Chair.webp"
+                  shadow-intensity="1"
+                  autoplay ar ar-modes="webxr scene-viewer
+                  ar camera-controls touch-action="pan-y"
+                 >
+
+        <button slot="ar-button" id="ar-button">
+        ar 
+        </button>
+
+       
+
+
+
+   
+        
+           <div class="banner-container">
+         <div class="text">
+            Tu texto va aquí
+            <br> <!-- Agrega un salto de línea -->
+            <span class="additional-text">Texto adicional debajo</span> 
+        </div>
+        <div class="button">
+            <button class="button">Botón</button>
+        </div>
+    </div>
+                
+                
+                
+                
+               
+            
+        
+        
+        
+    </model-viewer>
+
+
+
+    <script>
+     const arButton = document.getElementById('ar-button');
+
+    // Obtén el contenedor de la clase .banner-container
+    const bannerContainer = document.querySelector('.banner-container');
+
+    // Agrega un evento click al botón AR
+    arButton.addEventListener('click', () => {
+        // Cambia el estilo de display a flex
+        bannerContainer.style.display = 'flex';
+    });
+
+    // Obtén el elemento <model-viewer>
+    const viewer = document.querySelector('model-viewer');
+
+    // Agrega un oyente para el evento 'ar-status' en <model-viewer>
+    viewer.addEventListener('ar-status', (event) => {
+        if (event.detail.status === 'not-presenting') {
+            // Oculta la clase .banner-container cuando se cierra la vista AR
+            bannerContainer.style.display = 'none';
+        }
+    });
+</script>
+
+
+    <style>
+    
+      
+        
+        /* This keeps child nodes hidden while the element loads */
+        :not(:defined) > * {
+            display: none;
+        }
+
+        model-viewer {
+            background-color: #eee;
+            overflow-x: hidden;
+        }
+
+        #ar-button {
+         background-image: url("https://filesarreality.com/files/fingerar.svg");
+    background-repeat: no-repeat;
+    background-size: 30px 30px;
+    background-position: 2px 50%;
+    background-color: #fff;
+    position: fixed;
+    top: 50px; /* Ajusta la distancia desde la parte superior según tus necesidades */
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    padding: 0px 20px 20px 40px;
+    font-family: 'Roboto Regular', 'Helvetica Neue', sans-serif;
+    font-size: 14px;
+    color: #4285f4;
+    height: 36px;
+    line-height: 36px;
+    border-radius: 18px;
+    border: 1px solid #DADCE0;
+        }
+
+            #ar-button:active {
+                background-color: #E8EAED;
+            }
+
+            #ar-button:focus {
+                outline: none;
+            }
+
+            #ar-button:focus-visible {
+                outline: 1px solid #4285f4;
+            }
+
+        @keyframes circle {
+            from {
+                transform: translateX(-50%) rotate(0deg) translateX(50px) rotate(0deg);
+            }
+
+            to {
+                transform: translateX(-50%) rotate(360deg) translateX(50px) rotate(-360deg);
+            }
+        }
+
+        @keyframes elongate {
+            from {
+                transform: translateX(100px);
+            }
+
+            to {
+                transform: translateX(-100px);
+            }
+        }
+
+        model-viewer > #ar-prompt {
+            position: absolute;
+            left: 50%;
+            bottom: 175px;
+            animation: elongate 2s infinite ease-in-out alternate;
+            display: none;
+        }
+
+        model-viewer[ar-status="session-started"] > #ar-prompt {
+            display: block;
+        }
+
+        model-viewer > #ar-prompt > img {
+            animation: circle 4s linear infinite;
+        }
+
+        model-viewer > #ar-failure {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 175px;
+            display: none;
+        }
+
+        model-viewer[ar-tracking="not-tracking"] > #ar-failure {
+            display: block;
+        }
+
+        .slider {
+            width: 100%;
+            text-align: right;
+            overflow: hidden;
+             justify-content: center;
+            position: absolute;
+            bottom: 16px;
+             
+        }
+
+        .slides {
+            display: flex;
+            justify-content: center;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        
+        
+
+            .slide.selected {
+                border: 2px solid #4285f4;
+            }
+
+            .slide:focus {
+                outline: none;
+            }
+
+            .slide:focus-visible {
+                outline: 1px solid #4285f4;
+            }
+    </style>
+
+
+
+    <script src="https://filesarreality.com/11/script.js"></script>
+    <!-- Loads <model-viewer> for browsers: -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.2.0/model-viewer.min.js"></script>
+  </body>
+</html>
